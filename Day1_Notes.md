@@ -40,9 +40,28 @@ Syllabus:
 * Now we known where we are, we can look at the contents of the User directory:
 ```
 ls
-# lists the contects of directory
+# lists the contents of directory
 ```
 
+* Most functions have additional options that make them more user friendly. For example, if we wanted the directory contents organized line by line:
+```
+ls -l
+# lists the contents of directory line by line with a lot more information.
+```
+
+
 * One of the big mysteries when I started to learn how to use the shell was knowing what tools were available.
-* Here are some quick reference resources that have useful basic functions:
-https://github.com/kulibraries/swc-workshop-helps/blob/master/command-handout.md
+* Here is a quick reference that has useful basic functions:
+https://github.com/ereverman/July-August_SWCarpentry_Day1/blob/master/command-handout.md
+* Here is an example of how to find the options for ls:
+http://linuxcommand.org/lc3_man_pages/ls1.html
+
+```
+man ls
+# to exit, q
+```
+
+* What happens if you mistype:
+```
+ks
+```
