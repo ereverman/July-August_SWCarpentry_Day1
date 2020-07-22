@@ -100,6 +100,431 @@ ls -lh
 * Let's get some data that we will use to practice on.
 https://github.com/kulibraries/ku-swc-files.git
 
+* This repository will appear in your downloads directory.
+* Open finder/folder and navigate to the downloaded directory.
+* Copy or move the directory to your Desktop.
+
+* The ls command can be used to look at the contents of other directories, not just the one you are in
+
+```
+# we just did this:
+ls
+
+# now look in one of the directories that is listed:
+ls Desktop
+
+## EXERCISE:
+# list the contents of your downloaded directory (you should see your downloaded directory).
+ls Desktop/ku-swc-files-master/
+
+```
+
+* You can continue to look into the contents of other directories as long as you follow the path through your directories.
+* Let's update our map: (powerpoint)
+* Your marker should still be on the "Me" position because we are still in our designated user directory but we are about to change that.
+
+```
+# change directory
+cd Desktop
+pwd
+
+# to help you keep track of where you are move your marker to the desktop directory.
+
+# change directory to the data-shell directory:
+ls # what is in front of us in the tree?
+# two ways to accomplish this because our target directory is two steps down the tree.
+
+cd ku-swc-files-master
+cd data-shell
+
+cd ku-swc-files-master/data-shell
+
+```
+
+* How do we return to where we came from?
+
+```
+# cd can go forward and backward
+cd ku-swc-files-master
+
+# if you want to step out one level use a general shortcut:
+cd ../
+# this will move you to the parent directory
+pwd 
+# move your marker.
+```
+* the ../ is present in every directory by default and we can see it with a special flag:
+```
+ls -F -a
+
+# -a stands for show all. Normally files and directories that begin with . are hidden.
+
+ls -Fa
+# flags can be combined.
+```
+* There is another directory ./ which means the current directory.
+* This is a useful shortcut for moving files around.
+
+* cd can also be used to jump across all of your directories to the home directory
+```
+cd
+pwd
+
+## Exercise:
+cd to the data-shell directory with one line
+
+cd Desktop/ku-swc-files-master/data-shell
+```
+
+### Relative and Absolute paths (ppt)
+* Relative paths point to directories starting from your current position.
+ * pros: shorter path (less typing), easier to remember what's immediately above and below your current position.
+ * cons: writing scripts that use input files and generate output files are fragile with relative paths. You have to be in a specific place for the scripts to run properly.
+* Absoulute paths point to directories starting from the home directory.
+ * pros: makes scripts more stable if they can find input files and output directories from anywhere in your filing system.
+ * cons: they can get very long, especially if you are referencing files that are buried deep in your system. (but there are ways around this)
+
+* Two exercises.
 
 
+### Nelle Case Study: File organization tips
+
+* Nelle is a marine biologist, studying marine life from the North Pacific Gyre where trash accumulates rapidly. She studies the effects of this toxic dump on proteins in gelatinous marine organisms.
+* Her goal is to analyze 1520 samples, and she needs to learn how to automate the task with the shell in order to not spend 12 hours analyzing each file independently.
+* Our goal is to help her put together a pipeline that does this.
+* Let's look at her data organization:
+ 
+```
+cd north-pacific-gyre/2012-07-03
+ls
+
+# data are organized according to year-month-day so that they will be in chronological order. If she used month names, the months would be out of order.
+# her names are long but informative. 
+```
+* Descriptive directory and file names are good practice, but they can be annoying to type out if you are moving around a lot.
+* Use tab completion to do two things:
+ 1. Reduce keystrokes/time.
+ 2. Double check your path.
+  * If the directory doesn't exist or you forgot a step in the path, tab completion won't work.
+  
+```
+cd
+# go home
+
+cd Desktop/ku-swc-files-master/data-shell/north...
+
+# pressing tab twice will show you what is next in the path.
+```
+
+## Working with files and directories:
+* Starting with a template for a project gives you some consistent directories for elements that all projects have (like data, figures, output files)
+* Common to need to add directories in the middle of a project that are unique.
+ * Maybe the presentation of data will be different for different audiences.
+* We are going to do three things:
+ 1. create a directory hierarchy that matches a desired tree structure.
+ 2. create files in the hierarchy using an editor to copy and rename existing files.
+ 3. Delete, copy and move specified files and directories
+
+```
+pwd
+# move your marker to where you are currently
+
+# cd to the data-shell directory and look at what is inside with ls -F (ppt)
+```
+
+* Let's add a new empty directory called thesis
+
+```
+mkdir thesis
+# no output, so need to check if it did anything:
+ls -F
+# you can also look at the GUI to see if the directory appears. Directories can be made here as well.
+
+ls -F thesis
+# nothing is inside yet
+```
+
+* Let's create a text file.
+```
+cd thesis
+nano draft.txt
+```
+
+* nano is a text editor. 
+* Only works with text, not tables or images.
+* nano is one of the least complex editors, others prefer different programs for other features.
+ * Less complex is a good place to start because most of us don't actually write theses or manuscripts in the command line...
+ * Practical uses for nano include making small edits to scripts to fix an error, updating a ReadMe file that you're using as a log, etc.
+
+```
+# type a few lines:
+nano is a text editor program.
+Use the arrow keys to navigate between letters, pointing and clicking won't help you here.
+To save, press CTRL+o and Return/Enter to save the file edits to draft.txt
+To exit, press CTRL+x
+
+```
+* nano automatically creates a file named draft.txt
+* We can also use touch to make an empty file 
+
+```
+touch my_file.txt
+ls -l
+# what happened?
+```
+* File extensions (ppt)
+
+### Moving files and directories:
+
+* Move to your data-shell directory:
+```
+cd ../data-shell
+```
+* We made a draft.txt file in the thesis directory that doesn't have a very informative name.
+* We can change the name of a file with move.
+* The syntax for mv is similar to others that we will use. 
+ * command what-we're-moving where-it-goes 
+```
+mv thesis/draft.txt thesis/quotes.txt
+ls thesis
+```
+* mv is sometimes dangerous. It won't warn you if a file exists with that name, it will overwrite it.
+* mv has flags that can help
+```
+mv -i thesis/my_file.txt thesis/quotes.txt
+```
+
+* mv also works on directories
+* Now mv the quotes.txt to the current working directory (data-shell)
+```
+mv thesis/quotes.txt .
+# the second argument can be quick-referenced with the . or you can type the absolute path
+# you must specify one of the two ways.
+
+ls thesis
+ls quotes.txt
+```
+* We can also move multiple files at once.
+```
+cd thesis
+touch another_file.txt
+ls
+
+cd ../
+mv thesis/my_file.txt thesis/another_file.txt .
+```
+* cp works like mv, except it makes a copy of the file instead of moving it.
+```
+cp quotes.txt thesis/quotations.txt
+ls quotes.txt thesis/quotations.txt
+```
+* cp also works on directories, but you need an additional flag.
+```
+cp -r thesis thesis_backup
+ls
+```
+* -r stands for recursive and indicates that the directory and everything it contains should be acted on.
+```
+ls thesis thesis_backup
+```
+
+* removing data files and directories is also possible but should be done with extreme caution. 
+* rm does not send objects to the trash bin, it deletes them completely and there's no getting them back.
+
+```
+rm -i thesis_backup/quotations.txt
+rm thesis # error message
+rm -r thesis
+```
+
+* Move to the data/ and take a quick break
+```
+ls -lh
+# follow the exercise instructions on the powerpoint
+
+cd data/
+mkdir backup/
+cp amino-acids.txt animals.txt backup/
+ls backup/
+ls
+
+```
+
+### How to move multiple files at once:
+* Often, we need to move similar output files to a new subdirectory to help with organization.
+* We can use wildcards to access multiple files at once.
+* There are many types of wildcards that are more or less specific to types of characters.
+* * is a wild card that matches zero or more characters.
+
+```
+pwd
+# move to the molecules/ refer to your map if you need to.
+
+cd data-shell/molecules/
+ls
+ls *.pdb
+ls p*.pdb
+
+# ? is a wildcard that matches exactly one character.
+ls ?ethane.pdb
+ls *ethane.pdb
+
+```
+* powerpoint exercise and/or take a break:
+```
+pwd
+ls
+touch fructose.dat
+touch sucrose.dat
+ls
+mkdir analyzed
+mkdir raw
+
+mv *.dat analyzed/
+cp *.pdb raw
+ls
+ls analyzed/
+ls raw/
+```
+
+### Pipes and Filters:
+* We've been using commands individually to do single tasks.
+* Commands can be daisy chained together to save time and lines of code.
+```
+ls molecules/
+```
+* wc can be used to get parameters for a file.
+```
+wc cubane.pdb
+# lines, words, characters
+
+wc *.pdb
+# Also shows the total of all lines 
+```
+* wc has flags like other commands we've looked at so far
+```
+# we want the number of lines in a file
+man wc
+q
+
+wc -l *.pdb
+```
+* What happens if you forget to finish a command?
+```
+wc -l
+CTRL+c to escape
+```
+
+* We can combine wc with another command to filter files based on a criterion.
+* First we will break it into steps:
+```
+# which files has the fewest lines:
+wc -l *.pdb > lengths.txt
+# makes a new file:
+ls -lh
+
+# What is inside lengths.txt:
+cat lengths.txt
+# This prints the entire contents to your terminal
+# Useful if the file is small, problematic if the file is very large.
+less lengths.txt
+q
+# also works and allows you to scroll page by page.
+```
+* sort command will sort the contents of a file.
+```
+man sort
+# lots of options, but we want to sort numerically
+
+sort -n lengths.txt
+# doesn't change the file, but outputs the contents to terminal.
+
+sort -n lenths.txt > sorted-lengths.txt
+head -n 1 sorted-lengths.txt
+# we only want the first number of lines. -n flag means different things for different commands.
+tail -n 2 sorted-lengths.txt
+# works in a similar way
+```
+* The > operator will create a new file that doesn't exist or it will completely overwrite an existing file.
+* Sometimes, we want to append a new line to an existing file.
+* Use the >> operator to append:
+```
+echo hello > testfile01.txt
+cat testfile01.txt
+
+echo "hello again" >> testfile01.txt
+cat testfile01.txt
+```
+
+* Pipes allow us to link together commands to avoid generating intermediate files
+```
+ls
+# we have lengths.txt and sorted-lengths.txt but we really only wanted sorted-lengths.txt
+
+wc -l *.pdb | sort -n
+wc -l *.pdb | sort -n | head -n 1
+
+# common use: copying files over, make sure you copied all of them:
+
+ls -l *.pdb | wc -l
+
+```
+* Let's work through an example:
+```
+cd data/
+ls
+cat animals.txt | head -n 5 | tail -n 3 | sort -r > final.txt
+# takes a subset of the data using positional information from head and tail, then sort those remaining lines in reverse order.
+
+```
+* We can use cut to obtain sections of a file:
+* cut expects files to be separated by a delimiter (e.g. tab separated)
+
+```
+cut -d , -f 2 animals.txt
+# the file is comma separated, and we want the second column of the animals.txt file.
+```
+* uniq is another filter like sort that can be used to reduce the complexity of a file.
+* We want to know the types of animals that appear in the file:
+```
+cut -d , -f 2 animals.txt | sort | uniq
+
+cut -d , -f 2 animals.txt | sort | uniq -c
+```
+
+* Let's use Nelle's files as a way to demonstrate how these tools can be used:
+* Go to the north-pacific-gyre/
+```
+cd ../north-pacific-gyre/
+ls
+cd 2012-07-03
+ls
+
+wc -l *.txt
+# The expected file size is 300 lines
+
+wc -l *.txt | sort -n | head -n 5
+# one of the files has fewer than 300 lines
+
+# are any files too big?
+wc -l *.txt | sort -n | tail -n 5
+# looks good, but there is another problem. Z indicates a file with missing information.
+
+# Find other files with missing information:
+ls *Z.txt
+```
+
+* Wildcards with the * can be narrowed down.
+```
+# if you knew you needed to look for files that had a unique identifier followed by A or B:
+
+ls *A.txt *B.txt
+ls *[AB].txt
+```
+
+## Loops
+
+* Loops are a programming construct that allos us to repeat a command of set of commands for each item in a list.
+* Increases productivity through automation.
+* Reduces the amount of typing and time interacting with files.
 
