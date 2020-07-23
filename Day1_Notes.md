@@ -662,3 +662,41 @@ bash goostats $datafile stats-$datafile
 done
 
 # If you have a long list of data files, you can open another terminal window while the current process is running to check that the proper outputs are being made
+```
+
+* echo is a good way to put "training wheels" on your code. It's possible to wreak a lot of havoc if you have an error and it overwrites files incorrectly.
+```
+# go to molecules
+
+# this is the correct way to use echo
+for datafile in *.pdb
+do
+echo "cat $datafile >> all.pdb"
+done
+
+# This doesn't work as well:
+for datafile in *.pdb
+do
+echo cat $datafile >> all.pdb
+done
+```
+
+* Loops can be nested to increase their power
+```
+for species in cubane ethane methane
+do
+for temperature in 25 30 37 40
+do
+mkdir $species-$temperature
+done
+done
+```
+* One final tool that you can use to look at all the commands you've run is to use history:
+```
+history 
+
+history | tail -n 25
+
+history | grep bash # for a keyword search.
+```
+
