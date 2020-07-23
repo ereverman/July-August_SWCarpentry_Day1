@@ -2,6 +2,17 @@
 
 Course website: https://kulibraries.github.io/2020-07-24-ku-online/
 This etherpad: https://pad.carpentries.org/2020-07-24-ku-online
+My notes: https://github.com/ereverman/July-August_SWCarpentry_Day1/edit/master/Day1_Notes.md
+
+
+Notes:
+* Use the zoom chat to ask questions.
+* I will do my best to monitor the chat, but feel free to unmute yourself to jump in and ask a question.
+* I'll check in periodically to check pace, but you can use the buttons to let me know if i'm going too fast.
+* we will use a piece of paper, pen/pencil, and some kind of marker like a coin this morning so make sure you have that handy.
+
+
+
 
 Syllabus:
 * Introduction to File Organization
