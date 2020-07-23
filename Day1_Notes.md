@@ -528,3 +528,137 @@ ls *[AB].txt
 * Increases productivity through automation.
 * Reduces the amount of typing and time interacting with files.
 
+* For this exercise, change directory to creatures
+* This directory contains genome files. Our example will show how to loop over these three files, but the same idea can be applied to any number of files.
+* take a look at the files
+```
+head -5 basilisk.dat monotaur.dat unicorn.dat
+
+# first three lines: common name, classification, updated date
+# Loops require the structure of the files to be identical. The goal is to the same thing to each of them, and differences in file structure can cause breakdown
+```
+
+* Say we want the classification for each species (second line of each file)
+* One strategy is to call for the first two lines with head and then the last of those two lines with tail.
+* we can do this for each file or we can use a loop
+```
+for filename in basilisk.dat minotaur.dat unicorn.dat
+do
+head -n 2 $filename | tail -n 1
+done
+
+# a few things to notic: the full prompt is gone for the other lines of the loop.
+# you can combine the tools we've been using such as pipes and tab completion with loops.
+```
+* In our loop, we used the variable name filename, but there isn't anything special about this word except that it can be informative.
+```
+for temperature in basilisk.dat unicorn.dat
+do
+head...
+
+# this seems like it will give the temperature of the files, but the output is still what we asked for before.
+```
+* variable names can be designated with $, but curly brackets are also sometimes used for clarity: ${filename}
+* this is useful if the variable is actually part of a longer name:
+ * For example I have a list of file names that have a common part and a unique part
+ * I define the variable using the sample identifier as the "thing" that changes in the loop while the rest of the name stays the same.
+ * I could define the whole file name as the variable, but at other parts of my pipeline, the file extension changes but the sample id stays the same.
+ * Using the unique part of the name makes the variable reusable in other parts of my pipeline.
+ 
+* Let's practice some more:
+* move to the molecules directory, refer to powerpoint
+
+```
+ls
+
+for datafile in *.pdb
+do
+ls *.pdb
+done
+
+
+# then try
+for datafile in *.pdb
+do
+ls $datafile
+done
+
+# the difference is using a variable name operates on one of the files at a time. 
+# in the first case because there are six files that end in .pdb, the loop prints all of the file names six times, once for each position in the list of file names.
+
+# wildcards can also be used to limit the files that are being operated on:
+
+for filename in c*
+do
+ls $filename
+done
+```
+
+* In reality, these loops are more complicated than needed because they are redundant with the ls command.
+* Now let's practice with some other examples
+
+* Save a file in a loop:
+```
+for alkanes in *.pdb
+do
+echo $alkanes
+cat $alkanes > alkanes.pdb
+done
+
+# look at the file.
+# what would we need to change to have all of the contents?
+
+for datafile in *.pdb
+do
+cat $datafle >> all.pdb
+done
+```
+
+* questions/break?
+* let's go back to the creatures directory.
+* Goal is to get lines 81-100 of each file.
+```
+for filename in *.dat
+do
+echo $filename
+head -n 100 $filename | tail -n 20
+done
+
+# echo is an important command because we want some kind of separator between the outputs so we know what file contents is which.
+```
+* Say we want to make a backup copy of our files called original-unicorn.dat
+```
+for filename in *.dat
+do
+cp $filename original-$filename
+done
+
+# refer to powerpoint
+
+```
+
+* Nelle has a statistical program she wants to use a loop to execute
+* Go to the 2012-07-03 directory in north-pacific-gyre
+* the program is called goostats
+* goostats takes two arguments: the input file and the output file
+
+```
+# first, set up getting the input files:
+for datafile in NENE*[AB].txt
+do
+echo $datafile
+done
+
+# next, set up for the output files:
+for datafile in NENE*[AB].txt
+do
+echo $datafile stats-$datafile
+done
+
+# final command:
+for datafile in NENE*[AB].txt
+do echo $datafile
+bash goostats $datafile stats-$datafile
+done
+
+# If you have a long list of data files, you can open another terminal window while the current process is running to check that the proper outputs are being made
