@@ -1,8 +1,11 @@
 ### Notes for teaching Unix Shell, day 1: July 24.
 
 Course website: https://kulibraries.github.io/2020-07-24-ku-online/
+
 This etherpad: https://pad.carpentries.org/2020-07-24-ku-online
+
 My notes: https://github.com/ereverman/July-August_SWCarpentry_Day1/edit/master/Day1_Notes.md
+
 Powerpoint: https://github.com/ereverman/July-August_SWCarpentry_Day1/blob/master/Day1.pdf
 
 
